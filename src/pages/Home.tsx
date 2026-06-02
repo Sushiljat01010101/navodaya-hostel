@@ -15,7 +15,7 @@ const stagger = {
 };
 
 const features = [
-  { icon: Shield, title: "24/7 Security", desc: "CCTV, biometric entry & trained security guards round the clock.", color: "from-emerald-400 to-green-500" },
+  { icon: Shield, title: "24/7 Security", desc: "CCTV,  trained security guards round the clock.", color: "from-emerald-400 to-green-500" },
   { icon: Wifi, title: "Free High-Speed WiFi", desc: "Unlimited internet connectivity throughout the hostel premises.", color: "from-blue-400 to-cyan-500" },
   { icon: UtensilsCrossed, title: "Nutritious Meals", desc: "Hygienic, home-style breakfast, lunch & dinner included daily.", color: "from-amber-400 to-orange-500" },
   { icon: Wind, title: "AC Rooms Available", desc: "Air-conditioned double sharing rooms for ultimate comfort.", color: "from-sky-400 to-blue-500" },
