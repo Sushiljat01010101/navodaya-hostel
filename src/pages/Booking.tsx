@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Loader2, Send, Shield, UtensilsCrossed, Wifi, BookOpen } from "lucide-react";
 import { toast } from "sonner";
-import { sendBookingNotification } from "@/lib/telegram";
+import { sendBookingOnWhatsApp } from "@/lib/whatsapp";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -41,7 +41,7 @@ export default function Booking() {
     const id = "NGH-" + Date.now().toString().slice(-6);
     setBookingId(id);
     const rent = selectedRoom?.price.replace("/month", "") || "—";
-    await sendBookingNotification({ ...form, rent, bookingId: id });
+    sendBookingOnWhatsApp({ ...form, rent, bookingId: id });
     setLoading(false);
     setSuccess(true);
     toast.success("Booking submitted! We'll confirm within 24 hours.");
@@ -57,7 +57,7 @@ export default function Booking() {
 
   return (
     <div>
-      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/gallery/exterior.png)" }}>
+      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/gallery/exterior.png)` }}>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 to-rose-900/65" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -184,7 +184,7 @@ export default function Booking() {
                   {selectedRoom ? (
                     <div>
                       <div className="aspect-video rounded-xl overflow-hidden mb-4 bg-rose-50">
-                        <img src="/images/gallery/double-room.png" alt={selectedRoom.label} className="w-full h-full object-cover" />
+                        <img src={`${import.meta.env.BASE_URL}images/gallery/double-room.png`} alt={selectedRoom.label} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex justify-between items-start mb-3">
                         <p className="font-bold text-slate-900 text-sm">{selectedRoom.label}</p>

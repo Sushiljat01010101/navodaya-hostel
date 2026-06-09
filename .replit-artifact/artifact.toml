@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/navodaya-hostel/"
+title = "Navodaya Hostel"
+version = "1.0.0"
+id = "artifacts/navodaya-hostel"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/navodaya-hostel/" ]
+localPort = 22545
+
+[services.development]
+run = "pnpm --filter @workspace/navodaya-hostel run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/navodaya-hostel", "run", "build" ]
+publicDir = "artifacts/navodaya-hostel/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22545"
+BASE_PATH = "/navodaya-hostel/"

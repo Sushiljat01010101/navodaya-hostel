@@ -20,7 +20,7 @@ const values = [
 export default function About() {
   return (
     <div>
-      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/gallery/exterior.png)" }}>
+      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/gallery/exterior.png)` }}>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-rose-900/60" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -52,10 +52,10 @@ export default function About() {
 
             <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="grid grid-cols-2 gap-5">
               {[
-                { img: "/images/gallery/double-room.png", label: "Comfortable Rooms" },
-                { img: "/images/gallery/study-room.png", label: "Study Room" },
-                { img: "/images/gallery/dining-hall.png", label: "Dining Hall" },
-                { img: "/images/gallery/garden.png", label: "Garden" },
+                { img: `${import.meta.env.BASE_URL}images/gallery/double-room.png`, label: "Comfortable Rooms" },
+                { img: `${import.meta.env.BASE_URL}images/gallery/study-room.png`, label: "Study Room" },
+                { img: `${import.meta.env.BASE_URL}images/gallery/dining-hall.png`, label: "Dining Hall" },
+                { img: `${import.meta.env.BASE_URL}images/gallery/garden.png`, label: "Garden" },
               ].map(({ img, label }) => (
                 <div key={label} className="relative aspect-square rounded-2xl overflow-hidden group bg-rose-50">
                   <img src={img} alt={label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

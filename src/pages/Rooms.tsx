@@ -5,17 +5,18 @@ import { CheckCircle, ArrowRight, Wind, Wifi, UtensilsCrossed, Shield, BookOpen,
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
 
+const base = import.meta.env.BASE_URL;
 const rooms = [
   {
     id: "ac", badge: "Most Popular", badgeColor: "bg-rose-500",
-    image: "/images/gallery/double-room.png",
+    image: `${base}images/gallery/double-room.png`,
     title: "Double Sharing AC Room", subtitle: "Best for long stays & working professionals",
     price: "₹8,000", period: "/month",
     features: ["Air Conditioner (Split AC)", "Study Table & Ergonomic Chair", "Large Wardrobe with Lock", "Free High-Speed WiFi", "Balcony Access", "24/7 Hot Water Supply", "Clean Private Bathroom", "Daily Housekeeping"],
   },
   {
     id: "cooler", badge: "Best Value", badgeColor: "bg-amber-500",
-    image: "/images/gallery/double-room.png",
+    image: `${base}images/gallery/double-room.png`,
     title: "Double Sharing Cooler Room", subtitle: "Ideal for students on a budget",
     price: "₹7,500", period: "/month",
     features: ["Desert Air Cooler", "Study Table & Chair", "Wardrobe with Lock", "Free High-Speed WiFi", "Ceiling Fan", "24/7 Hot Water Supply", "Shared Bathroom (2 per floor)", "Weekly Deep Cleaning"],
@@ -34,7 +35,7 @@ const included = [
 export default function Rooms() {
   return (
     <div>
-      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/gallery/double-room.png)" }}>
+      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: `url(${base}images/gallery/double-room.png)` }}>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-rose-900/60" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>

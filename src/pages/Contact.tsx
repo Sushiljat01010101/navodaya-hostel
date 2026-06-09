@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, MessageCircle, Send, Loader2, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
-import { sendContactNotification } from "@/lib/telegram";
+import { sendContactOnWhatsApp } from "@/lib/whatsapp";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
@@ -21,7 +21,7 @@ export default function Contact() {
       return;
     }
     setLoading(true);
-    await sendContactNotification(form);
+    sendContactOnWhatsApp(form);
     setLoading(false);
     setSent(true);
     toast.success("Message sent! We'll reply within 24 hours.");
@@ -36,7 +36,7 @@ export default function Contact() {
 
   return (
     <div>
-      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: "url(/images/gallery/exterior.png)" }}>
+      <section className="relative pt-32 pb-20 bg-cover bg-center" style={{ backgroundImage: `url(${import.meta.env.BASE_URL}images/gallery/exterior.png)` }}>
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-rose-900/60" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>

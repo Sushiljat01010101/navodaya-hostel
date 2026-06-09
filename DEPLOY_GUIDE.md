@@ -1,160 +1,144 @@
 # Navodaya Girls Hostel — Vercel Deployment Guide
 
-## Folder Structure
+## What's inside this folder
 
 ```
-navodaya-hostel-vercel/
-├── public/
-│   └── images/
-│       └── gallery/          ← Hostel photos (already copied)
+navodaya-hostel/
 ├── src/
-│   ├── components/
-│   │   ├── ui/sonner.tsx
-│   │   ├── Navbar.tsx
-│   │   └── Footer.tsx
+│   ├── pages/        → Home, About, Rooms, Amenities, Gallery, Contact, Booking
+│   ├── components/   → Navbar, Footer, all UI components
 │   ├── lib/
-│   │   ├── utils.ts
-│   │   └── telegram.ts
-│   ├── pages/
-│   │   ├── Home.tsx
-│   │   ├── About.tsx
-│   │   ├── Rooms.tsx
-│   │   ├── Amenities.tsx
-│   │   ├── Gallery.tsx
-│   │   ├── Contact.tsx
-│   │   └── Booking.tsx
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css
-├── index.html
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-├── tsconfig.node.json
-├── vercel.json              ← Handles SPA routing on Vercel
-└── .gitignore
+│   │   └── whatsapp.ts  → Booking & Contact → WhatsApp (+91 98870 66664)
+│   └── App.tsx, main.tsx, index.css
+├── public/
+│   ├── images/gallery/  → 14 hostel photos
+│   └── videos/          → 4 video slots (rooms, common-areas, facilities, exterior)
+├── vercel.json       → SPA routing (required for page refresh to work)
+├── package.json      → All dependencies (no workspace deps)
+├── vite.config.ts    → Works on both Replit + Vercel
+└── tsconfig.json     → Standalone TypeScript config
 ```
 
 ---
 
-## Step 1: GitHub Account Banao
+## Step 1 — Install Node.js & Git
 
-1. Jao **https://github.com** → "Sign up" karo
-2. Username, Email, Password dalo → Account verify karo
-
----
-
-## Step 2: New Repository Banao
-
-1. GitHub pe login karo
-2. Right side pe "+" button → **"New repository"** click karo
-3. Repository name: `navodaya-hostel`
-4. **Public** select karo
-5. **"Create repository"** click karo
+Download and install:
+- **Node.js v18+**: https://nodejs.org
+- **Git**: https://git-scm.com
 
 ---
 
-## Step 3: Files Upload Karo (Sabse Easy Tarika)
+## Step 2 — Test Locally
 
-### Option A — GitHub Website se Upload (No coding needed)
-
-1. Repository mein "uploading an existing file" click karo
-2. `navodaya-hostel-vercel/` folder ki **saari files** drag & drop karo
-   - `public/` folder
-   - `src/` folder
-   - `package.json`, `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`
-   - `vercel.json`, `.gitignore`, `index.html`
-3. "Commit changes" click karo
-
-### Option B — Git CLI se (Faster)
+Open Terminal / Command Prompt in this folder:
 
 ```bash
-# navodaya-hostel-vercel folder mein jao
-cd navodaya-hostel-vercel
-
-# Git initialize karo
-git init
-git add .
-git commit -m "Initial commit — Navodaya Girls Hostel"
-
-# GitHub se link karo (apna username dalo)
-git remote add origin https://github.com/YOUR_USERNAME/navodaya-hostel.git
-git branch -M main
-git push -u origin main
-```
-
----
-
-## Step 4: Vercel Account Banao
-
-1. Jao **https://vercel.com** → **"Sign Up"**
-2. **"Continue with GitHub"** click karo — GitHub account se login karo
-3. Vercel aur GitHub ko connect karne ki permission do
-
----
-
-## Step 5: Vercel pe Deploy Karo
-
-1. Vercel Dashboard mein **"Add New → Project"** click karo
-2. GitHub repositories list mein **`navodaya-hostel`** dhundo → **"Import"** click karo
-3. Settings page ayega — sab default rehne do:
-   - **Framework Preset**: Vite (automatically detect hoga)
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-4. **"Deploy"** button click karo
-5. **2-3 minutes** mein deploy ho jayegi!
-
----
-
-## Step 6: Website Live!
-
-Deploy hone ke baad Vercel ek URL dega jaise:
-```
-https://navodaya-hostel.vercel.app
-```
-
-Ye URL kisi ko bhi share kar sakte ho!
-
----
-
-## Custom Domain Lagana (Optional)
-
-Agar tumhare paas `navodayagirlshostel.com` domain hai:
-
-1. Vercel Dashboard → Project → **"Settings"** → **"Domains"**
-2. Apna domain type karo → **"Add"**
-3. Domain registrar (GoDaddy/Namecheap) mein DNS settings update karo:
-   - **Type**: CNAME
-   - **Name**: www (ya @)
-   - **Value**: `cname.vercel-dns.com`
-4. 24 hours mein live ho jayega
-
----
-
-## Kuch Aur Update Karna Ho?
-
-Jab bhi website mein changes karo:
-1. Files update karo
-2. GitHub pe push karo / re-upload karo
-3. Vercel **automatically** redeploy kar dega!
-
----
-
-## Telegram Notifications
-
-Jab koi booking ya contact form bharta hai:
-- Hostel ko **Telegram pe instant message** aata hai
-- Bot Token aur Chat ID `src/lib/telegram.ts` mein already set hai
-
----
-
-## Local Testing (Development)
-
-```bash
-cd navodaya-hostel-vercel
 npm install
 npm run dev
 ```
 
-Browser mein khulega: `http://localhost:5173`
+Open browser: **http://localhost:3000** — site should load perfectly!
+
+Build test (same as Vercel runs):
+```bash
+npm run build
+```
+
+If build succeeds, you're ready to deploy.
+
+---
+
+## Step 3 — Add Your Videos (Optional)
+
+Replace placeholder files in `public/videos/` with your real videos:
+
+| Replace this file | With your video of |
+|---|---|
+| `rooms-tour.mp4` | Room walkthrough |
+| `common-areas-tour.mp4` | Study room, dining, lounge |
+| `facilities-tour.mp4` | Gym, laundry, security |
+| `exterior-tour.mp4` | Building exterior, garden |
+
+**Keep exact file names** — just replace the content.
+
+---
+
+## Step 4 — Push to GitHub
+
+1. Go to **https://github.com** → Sign up / Login
+2. Click **"+"** → **"New repository"**
+3. Name: `navodaya-hostel` → Click **"Create repository"**
+4. Run these commands in Terminal (inside this folder):
+
+```bash
+git init
+git add .
+git commit -m "Navodaya Girls Hostel - Initial deployment"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/navodaya-hostel.git
+git push -u origin main
+```
+
+> Replace `YOUR_USERNAME` with your GitHub username shown on github.com
+
+---
+
+## Step 5 — Deploy on Vercel
+
+1. Go to **https://vercel.com** → Login with GitHub
+2. Click **"Add New Project"**
+3. Find and click your `navodaya-hostel` repository → **"Import"**
+4. Vercel auto-detects Vite — **no settings to change**
+5. Click **"Deploy"** → Wait 1-2 minutes
+
+✅ Done! Your site is live at:
+**`https://navodaya-hostel.vercel.app`**
+
+---
+
+## Step 6 — Custom Domain (Optional)
+
+If you have a domain like `navodayagirlshostel.com`:
+
+1. Vercel Dashboard → Your Project → **Settings → Domains**
+2. Type your domain → **"Add"**
+3. Copy the DNS records Vercel gives you
+4. Go to your domain registrar (GoDaddy, Namecheap, etc.)
+5. Update DNS records as instructed
+6. Wait 10-30 minutes → domain goes live!
+
+---
+
+## Updating the Website Later
+
+Any change you make → push to GitHub → Vercel auto-deploys in 1 minute:
+
+```bash
+git add .
+git commit -m "Updated content"
+git push
+```
+
+---
+
+## Change WhatsApp Number
+
+Open `src/lib/whatsapp.ts`:
+```javascript
+const WHATSAPP_NUMBER = "919887066664";
+// Change to your number (country code + number, no + sign)
+// Example for India: "91XXXXXXXXXX"
+```
+
+---
+
+## Vercel Build Settings (Auto-detected)
+
+| Setting | Value |
+|---|---|
+| Framework | Vite |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Install Command | `npm install` |
+| Node.js Version | 18.x or 20.x |

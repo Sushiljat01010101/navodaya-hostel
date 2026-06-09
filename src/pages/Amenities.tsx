@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Shield, Camera, Lock, Wind, Droplets, BookOpen, UtensilsCrossed, Coffee, Wifi, Zap, Shirt, Tv, Flower2, Dumbbell, Phone, ArrowRight } from "lucide-react";
+import { Shield, Camera, Lock, Wind, Droplets, BookOpen, UtensilsCrossed, Coffee, Wifi, Zap, Shirt, Tv, Flower2, Dumbbell, Phone, ArrowRight, ArrowUpDown } from "lucide-react";
 
 const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
@@ -22,6 +22,7 @@ const amenityGroups = [
       { icon: Droplets, title: "24/7 Hot Water", desc: "Geysers in every bathroom provide hot water at any time you need it." },
       { icon: BookOpen, title: "Study Table & Chair", desc: "Ergonomic study setup in every room to support your academic and professional goals." },
       { icon: Zap, title: "Power Backup", desc: "Generator ensures uninterrupted power supply so your work and studies never stop." },
+      { icon: ArrowUpDown, title: "Passenger Lift", desc: "Modern elevator available for all floors — convenient for residents & easy movement of luggage." },
     ],
   },
   {
@@ -67,7 +68,7 @@ export default function Amenities() {
       <section className="py-8 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-12">
-            {[{ value: "16+", label: "Amenities" }, { value: "24/7", label: "Security" }, { value: "3x", label: "Meals Daily" }, { value: "100%", label: "WiFi Coverage" }, { value: "Power", label: "Backup" }].map(({ value, label }) => (
+            {[{ value: "17+", label: "Amenities" }, { value: "24/7", label: "Security" }, { value: "3x", label: "Meals Daily" }, { value: "100%", label: "WiFi Coverage" }, { value: "Power", label: "Backup" }].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <p className="text-2xl font-bold text-rose-600">{value}</p>
                 <p className="text-slate-500 text-sm">{label}</p>
@@ -116,7 +117,7 @@ export default function Amenities() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {["gym.png", "study-room.png", "dining-hall.png", "tv-lounge.png", "garden.png"].map((img) => (
               <div key={img} className="aspect-square rounded-2xl overflow-hidden group bg-rose-100">
-                <img src={`/images/gallery/${img}`} alt={img.replace(".png", "").replace("-", " ")} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                <img src={`${import.meta.env.BASE_URL}images/gallery/${img}`} alt={img.replace(".png", "").replace("-", " ")} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
             ))}
           </div>

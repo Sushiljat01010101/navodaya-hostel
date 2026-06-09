@@ -1,9 +1,15 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import {
   Shield, Wifi, UtensilsCrossed, Wind, BookOpen, Shirt,
-  Star, Phone, MapPin, ArrowRight, Users, Home, Award, Clock
+  Star, Phone, MapPin, ArrowRight, Users, Home, Award, Clock, ArrowUpDown
 } from "lucide-react";
+
+const heroImages = [
+  `${import.meta.env.BASE_URL}images/gallery/exterior.png`,
+  `${import.meta.env.BASE_URL}images/gallery/exterior1.png`,
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,12 +21,13 @@ const stagger = {
 };
 
 const features = [
-  { icon: Shield, title: "24/7 Security", desc: "CCTV,  trained security guards round the clock.", color: "from-emerald-400 to-green-500" },
+  { icon: Shield, title: "24/7 Security", desc: "CCTV, biometric entry & trained security guards round the clock.", color: "from-emerald-400 to-green-500" },
   { icon: Wifi, title: "Free High-Speed WiFi", desc: "Unlimited internet connectivity throughout the hostel premises.", color: "from-blue-400 to-cyan-500" },
   { icon: UtensilsCrossed, title: "Nutritious Meals", desc: "Hygienic, home-style breakfast, lunch & dinner included daily.", color: "from-amber-400 to-orange-500" },
   { icon: Wind, title: "AC Rooms Available", desc: "Air-conditioned double sharing rooms for ultimate comfort.", color: "from-sky-400 to-blue-500" },
   { icon: BookOpen, title: "Dedicated Study Room", desc: "Quiet, well-lit study space to help you focus and excel.", color: "from-violet-400 to-purple-500" },
   { icon: Shirt, title: "Laundry Facilities", desc: "Washing machines and drying areas available for residents.", color: "from-rose-400 to-pink-500" },
+  { icon: ArrowUpDown, title: "Passenger Lift", desc: "Modern elevator for easy access to all floors — perfect for luggage & daily convenience.", color: "from-indigo-400 to-blue-600" },
 ];
 
 const testimonials = [
@@ -37,15 +44,45 @@ const stats = [
 ];
 
 export default function HomePage() {
+  const [currentImg, setCurrentImg] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div>
       {/* HERO */}
-      <section
-        className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: "url(/images/gallery/exterior.png)" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-rose-900/40" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Sliding backgrounds */}
+        <AnimatePresence>
+          <motion.div
+            key={currentImg}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroImages[currentImg]})` }}
+          />
+        </AnimatePresence>
+
+        {/* Slide indicators */}
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {heroImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentImg(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === currentImg ? "w-8 bg-white" : "w-3 bg-white/40"}`}
+            />
+          ))}
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/55 to-rose-900/40 z-10" />
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
           <div className="max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium mb-6"
@@ -167,7 +204,7 @@ export default function HomePage() {
                 className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100"
               >
                 <div className="relative h-56 overflow-hidden bg-rose-100">
-                  <img src="/images/gallery/double-room.png" alt={room.title} className="w-full h-full object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}images/gallery/double-room.png`} alt={room.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <span className={`absolute top-4 left-4 px-3 py-1 ${room.badgeColor} text-white text-xs font-bold rounded-full`}>{room.badge}</span>
                 </div>
@@ -277,7 +314,7 @@ export default function HomePage() {
               <Link href="/booking" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-2xl text-base font-semibold shadow-xl shadow-rose-500/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-200">
                 Book Your Room Now <ArrowRight size={18} />
               </Link>
-              <a href="tel:+919887066664" className="inline-flex items-center gap-2 px-8 py-4 border border-white/25 text-white rounded-2xl text-base font-semibold hover:bg-white/10 transition-all duration-200">
+              <a href="tel:+919887066664" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-2xl text-base font-semibold shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-200">
                 <Phone size={18} /> Call Us Now
               </a>
             </div>
