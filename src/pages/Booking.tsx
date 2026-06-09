@@ -24,31 +24,20 @@ const EMPTY: Form = { name: "", phone: "", email: "", roomType: "", checkIn: "",
 
 type FieldProps = {
   label: string;
-  field: keyof Form;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   placeholder?: string;
   required?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function Field({ label, type = "text", placeholder, required = true, value, onChange }: FieldProps) {
-  return (
-    <div>
-      <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-        {label} {required && <span className="text-rose-500">*</span>}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        required={required}
-        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm"
-      />
-    </div>
-  );
-}
+const Field = ({ label, value, onChange, type = "text", placeholder, required = true }: FieldProps) => (
+  <div>
+    <label className="block text-sm font-semibold text-slate-700 mb-1.5">{label} {required && <span className="text-rose-500">*</span>}</label>
+    <input type={type} value={value} onChange={onChange} placeholder={placeholder} required={required}
+      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm" />
+  </div>
+);
 
 export default function Booking() {
   const [form, setForm] = useState<Form>(EMPTY);
@@ -74,14 +63,6 @@ export default function Booking() {
     setSuccess(true);
     toast.success("Booking submitted! We'll confirm within 24 hours.");
   };
-
-  const Field = ({ label, field, type = "text", placeholder, required = true }: { label: string; field: keyof Form; type?: string; placeholder?: string; required?: boolean }) => (
-    <div>
-      <label className="block text-sm font-semibold text-slate-700 mb-1.5">{label} {required && <span className="text-rose-500">*</span>}</label>
-      <input type={type} value={form[field]} onChange={set(field)} placeholder={placeholder} required={required}
-        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm" />
-    </div>
-  );
 
   return (
     <div>
@@ -135,11 +116,11 @@ export default function Booking() {
                       Personal Information
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <Field label="Full Name" field="name" placeholder="Your full name" value={form.name} onChange={set("name")} />
-                      <Field label="Phone Number" field="phone" type="tel" placeholder="+91 XXXXX XXXXX" value={form.phone} onChange={set("phone")} />
-                      <Field label="Email Address" field="email" type="email" placeholder="your@email.com" value={form.email} onChange={set("email")} />
-                      <Field label="Age" field="age" type="number" placeholder="Your age" value={form.age} onChange={set("age")} />
-                      <Field label="Occupation" field="occupation" placeholder="Student / Professional" value={form.occupation} onChange={set("occupation")} />
+                      <Field label="Full Name" value={form.name} onChange={set("name")} placeholder="Your full name" />
+                      <Field label="Phone Number" value={form.phone} onChange={set("phone")} type="tel" placeholder="+91 XXXXX XXXXX" />
+                      <Field label="Email Address" value={form.email} onChange={set("email")} type="email" placeholder="your@email.com" />
+                      <Field label="Age" value={form.age} onChange={set("age")} type="number" placeholder="Your age" />
+                      <Field label="Occupation" value={form.occupation} onChange={set("occupation")} placeholder="Student / Professional" />
                       <div className="sm:col-span-2">
                         <label className="block text-sm font-semibold text-slate-700 mb-1.5">Current Address <span className="text-rose-500">*</span></label>
                         <textarea value={form.address} onChange={set("address")} rows={2} placeholder="Your current residential address" required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm resize-none" />
@@ -160,7 +141,7 @@ export default function Booking() {
                           {roomOptions.map((r) => <option key={r.value} value={r.value}>{r.label} — {r.price}</option>)}
                         </select>
                       </div>
-                      <Field label="Preferred Check-in Date" field="checkIn" type="date" value={form.checkIn} onChange={set("checkIn")} />
+                      <Field label="Preferred Check-in Date" value={form.checkIn} onChange={set("checkIn")} type="date" />
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-1.5">Stay Duration <span className="text-rose-500">*</span></label>
                         <select value={form.duration} onChange={set("duration")} required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm bg-white">
@@ -177,7 +158,7 @@ export default function Booking() {
                       Guardian / Emergency Contact
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <Field label="Guardian Name" field="guardianName" placeholder="Full name" value={form.guardianName} onChange={set("guardianName")} />
+                      <Field label="Guardian Name" value={form.guardianName} onChange={set("guardianName")} placeholder="Full name" />
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-1.5">Relation <span className="text-rose-500">*</span></label>
                         <select value={form.guardianRelation} onChange={set("guardianRelation")} required className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition text-sm bg-white">
@@ -185,8 +166,8 @@ export default function Booking() {
                           {guardianRelations.map((r) => <option key={r}>{r}</option>)}
                         </select>
                       </div>
-                      <Field label="Guardian Phone" field="guardianPhone" type="tel" placeholder="+91 XXXXX XXXXX" value={form.guardianPhone} onChange={set("guardianPhone")} />
-                      <Field label="Guardian Email" field="guardianEmail" type="email" placeholder="guardian@email.com" required={false} value={form.guardianEmail} onChange={set("guardianEmail")} />
+                      <Field label="Guardian Phone" value={form.guardianPhone} onChange={set("guardianPhone")} type="tel" placeholder="+91 XXXXX XXXXX" />
+                      <Field label="Guardian Email" value={form.guardianEmail} onChange={set("guardianEmail")} type="email" placeholder="guardian@email.com" required={false} />
                     </div>
                   </div>
 
